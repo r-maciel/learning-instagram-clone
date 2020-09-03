@@ -12,7 +12,7 @@
                 <a href="{{ route('posts.create') }}">Add New Post</a>
             </div>
             <div class="d-flex">
-                <div class="pr-5"><strong>153</strong> posts</div>
+                <div class="pr-5"><strong>{{ $user->posts->count() }}</strong> posts</div>
                 <div class="pr-5"><strong>23k</strong> followers</div>
                 <div class="pr-5"><strong>252</strong> follows</div>
             </div>
@@ -23,7 +23,7 @@
     </div>
     <div class="row pt-5">
         @forelse($user->posts as $post)
-        <div class="col-4">
+        <div class="col-4 pb-4">
             <img src="/storage/{{ $post->image }}" style="width: 100%">
         </div>
         @empty
