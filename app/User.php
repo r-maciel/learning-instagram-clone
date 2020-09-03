@@ -44,6 +44,8 @@ class User extends Authenticatable
 
     public function posts()
     {
-        return $this->hasMany(Post::class);
+        /* If you don't want to order the post in the controller you can define here the default actions
+        to bring the posts for the user, you can use latest() or orderBy('created_at') */
+        return $this->hasMany(Post::class)->latest();
     }
 }
