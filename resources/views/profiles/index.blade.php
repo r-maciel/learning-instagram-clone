@@ -11,6 +11,7 @@
                 <h1>{{ $user->username }}</h1>
                 <a href="{{ route('posts.create') }}">Add New Post</a>
             </div>
+            <a href="{{ route('profile.edit', ['user' => $user->id]) }}">Edit Profile</a>
             <div class="d-flex">
                 <div class="pr-5"><strong>{{ $user->posts->count() }}</strong> posts</div>
                 <div class="pr-5"><strong>23k</strong> followers</div>
@@ -24,7 +25,7 @@
     <div class="row pt-5">
         @forelse($user->posts as $post)
         <div class="col-4 pb-4">
-            <img src="/storage/{{ $post->image }}" style="width: 100%">
+            <a href="{{ route('posts.show', ['post' => $post->id]) }}"><img src="/storage/{{ $post->image }}" style="width: 100%"></a>
         </div>
         @empty
         <div class="col-4">

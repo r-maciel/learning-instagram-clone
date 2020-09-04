@@ -16,4 +16,28 @@ class ProfilesController extends Controller
     	
         return view('profiles.index', compact('user'));
     }
+
+    public function edit(User $user)
+    {
+    	//Order by latest the posts
+    	/*$user->load(['posts' => function($q){
+    		$q->latest();
+    	}]);*/
+    	
+        return view('profiles.edit', compact('user'));
+    }
+
+    public function update()
+    {
+    	$data = request()->validate([
+    		'title' => 'required',
+    		'description' => 'required',
+    		'url' => 'url',
+    		'image' => '',
+    	]);
+    	
+        auth()->user()->profile()->update($data);
+
+        return redirect()->route('profile.show', ['user' => auth()->user()->id]);
+    }
 }
