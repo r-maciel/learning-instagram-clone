@@ -37,6 +37,20 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    //boot method is called when we're booting up User model
+    protected static function boot()
+    {
+        parent::boot();
+
+        // Created is an eloquent event that is fired when a user is created
+        // It takes a function (closure) that gives the user has been created, then we create a profile for that user through the realationship, we can do it because every field in or profile is nullable
+        static::created(function($user){
+            $user->profile()->create([
+                'title' => $user->username
+            ]);
+        });
+    }
+
     public function profile()
     {
         return $this->hasOne(Profile::class);
