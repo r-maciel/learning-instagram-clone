@@ -19,16 +19,15 @@ class ProfilesController extends Controller
 
     public function edit(User $user)
     {
-    	//Order by latest the posts
-    	/*$user->load(['posts' => function($q){
-    		$q->latest();
-    	}]);*/
+    	$this->authorize('update', auth()->user()->profile);
     	
         return view('profiles.edit', compact('user'));
     }
 
     public function update()
     {
+    	$this->authorize('update', auth()->user()->profile); 
+    	
     	$data = request()->validate([
     		'title' => 'required',
     		'description' => 'required',
