@@ -13,7 +13,7 @@
                     <div class="h4">{{ $user->username }}</div>
                     {{-- We create this component with vue in /resources/js/components/FollowButton.js 
                     We pass the user_id to the component --}}
-                    <follow-button user-id="{{ $user->id }}"></follow-button>
+                    <follow-button user-id="{{ $user->id }}" follows={{ $follows }}></follow-button>
                 </div>
                 @can('update', $user->profile)
                     <a href="{{ route('posts.create') }}">Add New Post</a>
@@ -25,8 +25,8 @@
             @endcan
             <div class="d-flex">
                 <div class="pr-5"><strong>{{ $user->posts->count() }}</strong> posts</div>
-                <div class="pr-5"><strong>23k</strong> followers</div>
-                <div class="pr-5"><strong>252</strong> follows</div>
+                <div class="pr-5"><strong>{{ $user->profile->followers->count() }}</strong> followers</div>
+                <div class="pr-5"><strong>{{ $user->following->count() }}</strong> follows</div>
             </div>
             <div class="pt-4 font-weight-bold">{{ $user->profile->title }}</div>
             <div>{{ $user->profile->description }}</div>

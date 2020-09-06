@@ -14,8 +14,14 @@ class ProfilesController extends Controller
     	/*$user->load(['posts' => function($q){
     		$q->latest();
     	}]);*/
+
+        /* If the user is auth, then we check if the user is following the user's profile we recieved as parameter if is correct then is true, if is not is false*/
+
+        /* We can pass the $user->id or $user->profile because both user_id and profile_id has the same value because they're created at the same moment, 
+        As we define in our model user, following is the relationship to the profiles, so is gonna look for the profile_id, so the value we pass in the contains() (the user id or the profile) is gonna be compared with the column of profile_id in our profile_user table */
+        $follows = auth()->user() ? auth()->user()->following->contains($user->profile) : false;
     	
-        return view('profiles.index', compact('user'));
+        return view('profiles.index', compact('user', 'follows'));
     }
 
     public function edit(User $user)
