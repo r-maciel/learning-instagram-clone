@@ -9,7 +9,11 @@
         </div>
         <div class="col-9 pt-5">
             <div class="d-flex justify-content-between align-items-baseline">
-                <h1>{{ $user->username }}</h1>
+                <div class="d-flex align-items-center pb-4">
+                    <div class="h4">{{ $user->username }}</div>
+                    {{-- We create this component with vue in /resources/js/components/FollowButton.js --}}
+                    <follow-button></follow-button>
+                </div>
                 @can('update', $user->profile)
                     <a href="{{ route('posts.create') }}">Add New Post</a>
                 @endcan
