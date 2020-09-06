@@ -33,17 +33,22 @@ class ProfilesController extends Controller
     		'title' => 'required',
     		'description' => 'required',
     		'url' => 'url',
-    		'image' => '',
+    		'image' => 'image',
     	]);
     	
 
         if (request('image')) {
         	$imagePath = request('image')->store('profile', 'public');
         	$image = Image::make('storage/'.$imagePath)->fit(1000,1000)->save();
+        	/* We crate this variable if there is an image in the request */
+    		$imageArray = ['image' => $imagePath];
         }
+
+        /* with array merge we mix arays, as $data has a field called $data['image'], this will be override with the valu of $imageArray that is equal to 'image' => $imagePath, both have the same name */
         auth()->user()->profile()->update(array_merge(
         	$data,
-        	['image' => $imagePath]
+        	/* If the variable is not defined then we pass an empty array, this way if we don't pass a image we do not override the image we already have with a null */
+        	$imageArray ?? []
         ));
 
         return redirect()->route('profile.show', ['user' => auth()->user()->id]);
