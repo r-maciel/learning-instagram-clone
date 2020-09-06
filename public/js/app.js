@@ -1917,6 +1917,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
+  /* Recieving the arguments for our component */
+  props: ['userId'],
   mounted: function mounted() {
     console.log('Component mounted.');
   },
@@ -1924,7 +1926,10 @@ __webpack_require__.r(__webpack_exports__);
   /* Add methos to our component */
   methods: {
     followUser: function followUser() {
-      alert('inside');
+      /* Axios is http client that comes installed, the method and the url we need */
+      axios.post("/follow/".concat(this.userId)).then(function (response) {
+        alert(response.data);
+      });
     }
   }
 });

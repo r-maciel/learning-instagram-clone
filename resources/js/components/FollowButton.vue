@@ -8,6 +8,9 @@
 
 <script>
     export default {
+        /* Recieving the arguments for our component */
+        props: ['userId'],
+
         mounted() {
             console.log('Component mounted.')
         },
@@ -15,7 +18,11 @@
         /* Add methos to our component */
         methods: {
             followUser(){
-                alert('inside');
+                /* Axios is http client that comes installed, the method and the url we need */
+                axios.post(`/follow/${this.userId}`)
+                .then(response => {
+                    alert(response.data)
+                });
             }
         }
     }

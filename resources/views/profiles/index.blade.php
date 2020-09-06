@@ -11,8 +11,9 @@
             <div class="d-flex justify-content-between align-items-baseline">
                 <div class="d-flex align-items-center pb-4">
                     <div class="h4">{{ $user->username }}</div>
-                    {{-- We create this component with vue in /resources/js/components/FollowButton.js --}}
-                    <follow-button></follow-button>
+                    {{-- We create this component with vue in /resources/js/components/FollowButton.js 
+                    We pass the user_id to the component --}}
+                    <follow-button user-id="{{ $user->id }}"></follow-button>
                 </div>
                 @can('update', $user->profile)
                     <a href="{{ route('posts.create') }}">Add New Post</a>
