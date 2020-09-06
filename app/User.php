@@ -62,4 +62,10 @@ class User extends Authenticatable
         to bring the posts for the user, you can use latest() or orderBy('created_at') */
         return $this->hasMany(Post::class)->latest();
     }
+
+    /* Defining many to many relationship */
+    public function following()
+    {
+        return $this->belongsToMany(Profile::class);
+    }
 }
