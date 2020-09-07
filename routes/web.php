@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Mail\NewUserWelcomeMail;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,6 +15,11 @@ use Illuminate\Support\Facades\Route;
 
 
 Auth::routes();
+
+/* Visualize our email in the browser, we need to call the mailable class we create */
+Route::get('/email', function(){
+	return new NewUserWelcomeMail();
+});
 
 Route::get('/', 'PostsController@index');
 

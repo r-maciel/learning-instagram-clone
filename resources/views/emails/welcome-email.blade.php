@@ -1,12 +1,9 @@
 @component('mail::message')
-# Introduction
+# Welcome to freeCodeGram
 
-The body of your message.
+This is a community of fellow developers and we love that you join us.
 
-@component('mail::button', ['url' => ''])
-Button Text
-@endcomponent
 
-Thanks,<br>
+All the best,<br>
 {{ config('app.name') }}
 @endcomponent
