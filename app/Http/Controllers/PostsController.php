@@ -21,8 +21,8 @@ class PostsController extends Controller
         /* This return an array with all the users id of the users the auth user follows in the table profile_user */
         $users = auth()->user()->following()->pluck('profiles.user_id');
         /* This received as parameter the field where is gonna look for, and an array with the values to look for.
-        And we order the posts by thelatest */
-        $posts = Post::whereIn('user_id', $users)->latest()->get();
+        And we order the posts by the latest, and paginate them 1n groups of 5 */
+        $posts = Post::whereIn('user_id', $users)->latest()->paginate(5);
 
         return view('posts.index', compact('posts'));
 
