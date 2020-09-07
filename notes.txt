@@ -1,0 +1,34 @@
+If you make changes to sass file you need to run >>npm run dev
+
+Using tinker
+
+>> php artisan tinker 
+
+>>> $profile = new  \App\Profile();
+=> App\Profile {#3181}
+>>> $profile->title = 'Cool title';
+=> "Cool title"
+>>> $profile->description = 'Description';
+=> "Description"
+>>> $profile->user_id = 1;
+=> 1
+>>> $profile->save();
+
+You can save the changes of a model that is related to our pricipal model with push, in the next example we're saving the change of url in our model profile that is related to our user;
+>>> $user->profile->url = 'www.freecodecamp.org';
+=> "www.freecodecamp.org"
+>>> $user->push();
+
+Elimina todo lo que sta en la tabla del modelo
+ModelName::truncate();
+
+Read more about intervention/image
+http://image.intervention.io/
+
+to create a symbolic link from our directory public/storage to storage/app/public, the last one is where our file really is, but we need to find it in public/storge because it is the only route accessible for the public in our app
+>> php artisan storage:link 
+
+When we make a change in our frontend files is gonna compile them
+>> npm run watch
+
+NOTE: For many to many relationships we needto create a pivot table where we store the ids of the related tables/models
