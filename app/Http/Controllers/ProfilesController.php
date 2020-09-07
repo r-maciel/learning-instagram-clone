@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use App\User;
 use Intervention\Image\Facades\Image;
 
@@ -20,8 +21,21 @@ class ProfilesController extends Controller
         /* We can pass the $user->id or $user->profile because both user_id and profile_id has the same value because they're created at the same moment, 
         As we define in our model user, following is the relationship to the profiles, so is gonna look for the profile_id, so the value we pass in the contains() (the user id or the profile) is gonna be compared with the column of profile_id in our profile_user table */
         $follows = auth()->user() ? auth()->user()->following->contains($user->profile) : false;
+
+        /* Cache::remember let us to use the cache instead of asking for the data to the database each time we need it,  as parameters recieve a unique name/id, ho much is gonna last tha cache until we ask for the data again, and the function for the data we want*/
+        $postCount = Cache::remember('count.posts.'.$user->id, now()->addSeconds(30), function() use($user){
+            return $user->posts->count();
+        });
+
+        $followersCount = Cache::remember('count.followers.'.$user->id, now()->addSeconds(30), function() use($user){
+            return $user->profile->followers->count();
+        });
+
+        $followingCount = Cache::remember('count.following.'.$user->id, now()->addSeconds(30), function() use($user){
+            return $user->following->count();
+        });
     	
-        return view('profiles.index', compact('user', 'follows'));
+        return view('profiles.index', compact('user', 'follows', 'postCount', 'followersCount', 'followingCount'));
     }
 
     public function edit(User $user)
