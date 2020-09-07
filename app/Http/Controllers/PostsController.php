@@ -13,6 +13,21 @@ class PostsController extends Controller
 		$this->middleware('auth');
 	}
 
+    public function index()
+    {
+        /*We can use this to load the posts for every user the auth user is following and do what we're doing in the next code
+        $users = auth()->user()->load('following.user.posts');*/
+
+        /* This return an array with all the users id of the users the auth user follows in the table profile_user */
+        $users = auth()->user()->following()->pluck('profiles.user_id');
+        /* This received as parameter the field where is gonna look for, and an array with the values to look for.
+        And we order the posts by thelatest */
+        $posts = Post::whereIn('user_id', $users)->latest()->get();
+
+        return view('posts.index', compact('posts'));
+
+    }
+
     public function create()
     {
     	return view('posts.create');
